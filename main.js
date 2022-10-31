@@ -11,7 +11,5 @@ btn.addEventListener('click', (e) => {
   weatherApi(destInputVal, totTravelVal);
 });
 
-//Enable WeatherComponent
+//Enable Weather Custom Component:
 window.customElements.define('weather-api', WeatherApi);
-
-console.log(totTravelVal);

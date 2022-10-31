@@ -20,11 +20,12 @@ template.innerHTML = `
   margin: 5px;
   opacity: .75;
   padding: 20px; 
+  box-shadow: 5px 10px #888888;
   width: 100%;
   max-width: 420px;
 }
 
-.weather--info{
+ .weather--info{
   font-size: 1.2em;
   line-height: 1.5;
   color: White;
@@ -35,6 +36,14 @@ template.innerHTML = `
   text-align: center;
 }
 
+
+.card-text{
+  font-size: 1.2em;
+  line-height: 1.5;
+  color: White;
+}
+
+
 </style> 
 
 <div class="card mb-3" style="max-width: 540px;">
@@ -44,11 +53,11 @@ template.innerHTML = `
   </div>
   <div class="col-md-8">
     <div class="card-body">
-      <h5 class="card-title">Weather in <span class="location"></span> </h5>
-      <p class="card-text"><span class="weather--info" id="img"></span></p>
-      <p class="card-text"><span class="weather--info" id="temp">Current Temperature:</span></p>
-      <p class="card-text"><span class="weather--info" id="desc">Feels Like: </span></p>
-      <p class="card-text"><span class="weather--info" id="hum">Humidity: </span></p>
+      <h5 class="card-title">Weather in <span id="location"></span> </h5>
+      <p class="card-text">Current Temperature: <span class="weather--info" id="temp"></span></p>
+      <p class="card-text"><span class="weather--info" id="img-holder"><img id="img"> </span></p>
+      <p class="card-text">Feels Like: <span class="weather--info" id="desc"> </span></p>
+      <p class="card-text">Humidity: <span class="weather--info" id="hum"> </span></p>
       <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
     </div>
   </div>
@@ -107,11 +116,6 @@ export class WeatherApi extends HTMLElement {
     this.humidity = this.shadowRoot.querySelector('#hum');
     this.img = this.shadowRoot.querySelector('#img');
 
-    //IMP:This section connects the custom element that you created.
-    // const locAttr = this.setAttribute('location');
-    // const tempAttr = this.setAttribute('temp');
-    // const descAttr = this.setAttribute('desc');
-    // const humAttr = this.setAttribute('hum');
-    // const imgAttr = this.getAttribute()
+    console.log(this.img);
   }
 }

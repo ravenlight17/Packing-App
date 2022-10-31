@@ -1,98 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Bootstrap CSS Start-->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <!-- Bootstrap CSS End-->
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!--External CSS Start-->
-    <link rel="stylesheet" href="style.css" />
-    <!--External CSS End-->
+  <!-- Bootstrap CSS Start-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <!-- Bootstrap CSS End-->
 
-    <title>Capstone Project - Packing App: CarryOn</title>
-  </head>
-  <body>
-    <div class="container">
-      <header>
-        <nav></nav>
-      </header>
-      <main>
+  <!--External CSS Start-->
+  <link rel="stylesheet" href="style.css" />
+  <!--External CSS End-->
+
+  <title>Capstone Project - Packing App: CarryOn</title>
+</head>
+
+<body>
+  <div class="container">
+    <header>
+      <nav></nav>
+    </header>
+    <main>
       <div class="weather weather--div">
-      <div id="app-data">
- 
-        <form>
-          <div class="mb-3">
-            <label for="location" class="form-label">Destination: </label>
-            <input
+        <div id="app-data">
+
+          <form>
+            <div class="mb-3">
+              <label for="location" class="form-label">Destination: </label>
+              <input
               type="text"
               class="form-control"
               id="location"
               aria-describedby="location"
             />
-            <div id="emailHelp" class="form-text">
-              Enter your Destination here
+              <div id="emailHelp" class="form-text">
+                Enter your Destination here
+              </div>
             </div>
-          </div>
 
-          <!-- <button type="submit" class="btn btn-primary" id="btn">Submit</button> -->
-<!-- 
-          <div class="mb-3">
-            <label for="traveldays" class="form-label"
-              >Total Travel Days:
-            </label>
-            <input
-              type="text"
-              class="form-control"
-              id="traveldays"
-              aria-describedby="traveldays"
-            />
-            <div id="totHelp" class="form-text">
-              Enter a max of 15 days or less
-            </div>
-          </div> -->
+            <label for="traveldays" class="form-label">Total Vacation Days: </label>
+            <input type="range" class="form-range" min="1" max="15" id="traveldays" value="8">
+            <p id="sliderOutput"></p>
 
-          <label for="traveldays" class="form-label">Total Vacation Days: </label>
-<input type="range" class="form-range" min="1" max="15" id="traveldays" value="8">
-<p id="sliderOutput"></p>
-
-
-
-          <button type="submit" class="btn btn-primary" id="btn">
+            <button type="submit" class="btn btn-primary" id="btn">
             Submit
           </button>
-        </form>
+          </form>
 
-        <weather-api></weather-api>
+          <weather-api></weather-api>
+        </div>
+        <div id="app">
+          <p id="destination"></p>
+          <p id="temp"></p>
+          <p><img id="icon" src=""></p>
+          <p id="description"></p>
+          <p id="humidity"></p>
+
+        </div>
       </div>
-      <div id="app">
-        <p id="destination"></p>
-        <p id="temp"></p>
-        <p><img id="icon" src=""></p>
-        <p id ="description"></p>
-        <p id="humidity"></p>
-      
-      </div>
-    </div>
+
   </div>
-      
-      </main>
-      
-    <!-- Option 1: Bootstrap Bundle with Popper -->
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
 
-    <script type="module" src="/main.js"></script>
-  </body>
+
+  </main>
+
+  <!-- Bootstrap Bundle with Popper -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
+  </script>
+
+  <script type="module" src="/main.js"></script>
+</body>
+
 </html>

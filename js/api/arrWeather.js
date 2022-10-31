@@ -9,3 +9,4 @@ totTravelSlider.textContent = `Value: ${totTravelVal}`;
 totTravelSlider.oninput = function () {
   sliderOutput.innerHTML = `Value: ${this.value}`;
 };
+

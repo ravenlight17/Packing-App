@@ -17,31 +17,51 @@ export async function weatherApi(destInputVal, totTravelVal) {
   const dataLonLat = await respLonLat.json();
   console.log(dataLonLat);
 
-  const img = document.createElement('img');
-
   const showWeatherDets = function () {
-    const { address } = data;
-    const { icon, description } = dataLonLat.weather[0];
+    const { address, description } = data;
+    const { icon } = dataLonLat.weather[0];
     const { temp } = data.currentConditions;
     const { humidity } = data.currentConditions;
 
     console.log(address, icon, description, temp, humidity);
 
-    document.querySelector(
-      '#destination'
-    ).textContent = `Weather in ${address}`;
-    document.querySelector('#temp').textContent = `Temperature: ${temp}°`;
-    document.querySelector(
-      '#icon'
-    ).src = `http://openweathermap.org/img/wn/${icon}@2x.png`;
-    document.querySelector(
-      '#description'
-    ).textContent = `Description: ${description}`;
-    document.querySelector('#humidity').innerText = `Humidity: ${humidity}`;
+    //Connecting Custom element with Weather API data
+    const custEl = document.querySelector('weather-api');
+
+    custEl.setAttribute('location', address);
+    custEl.setAttribute('temp', `${temp}°`);
+    custEl.setAttribute(
+      'img',
+      `http://openweathermap.org/img/wn/${icon}@2x.png`
+    );
+    custEl.setAttribute('description', description);
+    custEl.setAttribute('humidity', humidity);
   };
 
   showWeatherDets();
 
+  //Array Config:
+
+  // const getDataDaysLengthTotal = data.days.length;
+  // const getTotalTravelValueInput = Number(totTravelVal);
+  // const getLenghtMinusInput = getDataDaysLengthTotal - getTotalTravelValueInput;
+
+  // console.log(
+  //   getDataDaysLengthTotal,
+  //   getTotalTravelValueInput,
+  //   getLenghtMinusInput
+  // );
+
+  // console.log(getDataDaysLengthTotal);
+  // for (let i = 0; i < data.days.length - getLenghtMinusInput; i++) {
+  //   const dd = data.days[i];
+  //   const b = document.createElement('div');
+  //   const a = document.getElementById('app');
+
+  //   a.after(b);
+
+  //   b.textContent = `${dd}  ${showWeatherDets()}`;
+  /************************************** */
   // data.days.forEach((showWeatherDets, totTravelVal) => {
   //   console.log(totTravelVal, showWeatherDets);
   // });
