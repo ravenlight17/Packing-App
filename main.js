@@ -7,9 +7,10 @@ const btn = document.getElementById('btn');
 btn.addEventListener('click', (e) => {
   e.preventDefault();
   const destInputVal = document.getElementById('location').value;
-  // const totTravelVal = document.getElementById('traveldays').value;
+  const totTravelVal = document.getElementById('traveldays').value;
   weatherApi(destInputVal, totTravelVal);
 });
 
 //Enable Weather Custom Component:
 window.customElements.define('weather-api', WeatherApi);
+

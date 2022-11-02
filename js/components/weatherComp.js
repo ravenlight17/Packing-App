@@ -43,6 +43,11 @@ template.innerHTML = `
   color: White;
 }
 
+#img{
+margin-left: auto;
+margin-right: auto;
+}
+
 
 </style> 
 
