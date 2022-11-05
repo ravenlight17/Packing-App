@@ -1,6 +1,8 @@
- const KEY = import.meta.env.VITE_OW_KEY;
-const KEY_VC = import.meta.env.VITE_VC_KEY;
-// const KEY_GM = import.meta.evn.VITE_GOOGLEMAP_KEY;
+import { setDailyForecastImg } from "../suppComponents/dailyForecastImg";
+
+const KEY = import.meta.env.VITE_OPENWEATHER_KEY;
+const KEY_VC = import.meta.env.VITE_VISUALCROSSING_KEY;
+const KEY_GM = import.meta.env.VITE_GOOGLEMAP_KEY;
 
 //WeatherAPI Function connects input to fetch
 
@@ -21,11 +23,11 @@ export async function weatherApi(destInputVal, totTravelVal) {
   console.log(dataLonLat);
 
   //Google Map Location Lookup Api
-  // const URL_GOOGLEMAP = `https://maps.google.com/maps/api/js?key=${KEY_GM}&sensor=false&libraries=places`;
+  const URL_GOOGLEMAP = `https://maps.google.com/maps/api/js?key=${KEY_GM}&sensor=false&libraries=places`;
 
-  // const respGM = await fetch(URL_GOOGLEMAP);
-  // const dataGM = await respGM.json();
-  // console.log(dataGM);
+  const respGM = await fetch(URL_GOOGLEMAP);
+  const dataGM = await respGM.json();
+  console.log(dataGM);
 
   const showWeatherDets = function () {
     const { address, description } = data;
@@ -46,8 +48,11 @@ export async function weatherApi(destInputVal, totTravelVal) {
     );
     custEl.setAttribute('description', description);
     custEl.setAttribute('humidity', humidity);
-  };
+    
 
+    
+  };
+  
   showWeatherDets();
 
   //Array Config:
@@ -56,19 +61,6 @@ export async function weatherApi(destInputVal, totTravelVal) {
   const getTotalTravelValueInput = Number(totTravelVal);
   const getLenghtMinusInput = getDataDaysLengthTotal - getTotalTravelValueInput;
 
-  // console.log(
-  //   getDataDaysLengthTotal,
-  //   getTotalTravelValueInput,
-  //   getLenghtMinusInput
-  // );
-
-  // console.log(getDataDaysLengthTotal);
-
-  // for (let multiForecast in data.days) {
-  //   let arrDays;
-  //   arrDays += data.days[multiForecast];
-  //   showWeatherDets();
-  // }
   for (let i = 0; i < data.days.length - getLenghtMinusInput; i++) {
     const temp = data.days[i].temp;
     const icon = data.days[i].conditions;
@@ -92,29 +84,20 @@ export async function weatherApi(destInputVal, totTravelVal) {
       a.after(custEl);
       custEl.setAttribute('temp', `${temp}°`);
       custEl.setAttribute('condition', icon );
+      custEl.setAttribute('img', setDailyForecastImg(dataLonLat.weather[0].description));
       // custEl.setAttribute(
       //   'img',
       //   `http://openweathermap.org/img/wn/${icon}@2x.png`
       // );
       // custEl.setAttribute('description', description);
       custEl.setAttribute('date', date);
+      console.log(dataLonLat.weather[0].description)
 
-
-
-
-   
-
-    // a.after(custEl);
-
-    // b.textContent = `${temp}  ${icon} ${newDate}`;
-
-    // data.days.forEach((showWeatherDets, getLenghtMinusInput) => {
-    //   console.log(getLenghtMinusInput, showWeatherDets);
-    // });
   }
 
   console.log(data);
   console.log(dataLonLat);
+  // console.log(dataLonLat.daily.dt);
 
   /************************************** */
 }
