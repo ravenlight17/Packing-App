@@ -7,8 +7,13 @@ const KEY_GM = import.meta.env.VITE_GOOGLEMAP_KEY;
 //WeatherAPI Function connects input to fetch
 
 export async function weatherApi(destInputVal, totTravelVal) {
+
   // Visual Crossing API - 15 Day Forecast:
-  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&key=${KEY_VC}&contentType=json`;
+  // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&key=${KEY_VC}&contentType=json`;
+  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&forecast?iconSet=icons1&contentType=json&forecastDays=${totTravelVal}&key=${KEY_VC}`;
+  // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?iconSet=icons1&aggregateHours=24&combinationMethod=aggregate&shortColumnNames=true&contentType=json&unitGroup=metric&locationMode=single&locations=49.1791,-122.3161&forecastDays=7&key=`; 
+
+console.log(URL)
 
   const response = await fetch(URL);
   const data = await response.json();
@@ -23,15 +28,16 @@ export async function weatherApi(destInputVal, totTravelVal) {
   console.log(dataLonLat);
 
   //Google Map Location Lookup Api
-  const URL_GOOGLEMAP = `https://maps.google.com/maps/api/js?key=${KEY_GM}&sensor=false&libraries=places`;
+  // const URL_GOOGLEMAP = `https://maps.google.com/maps/api/js?key=${KEY_GM}&libraries=places`;
 
-  const respGM = await fetch(URL_GOOGLEMAP);
-  const dataGM = await respGM.json();
-  console.log(dataGM);
+  // const respGM = await fetch(URL_GOOGLEMAP);
+  // const dataGM = await respGM.json();
+  // console.log(dataGM);
 
   const showWeatherDets = function () {
     const { address, description } = data;
-    const { icon } = dataLonLat.weather[0];
+    // const { icon } = dataLonLat.weather[0];
+    const { icon } = data.currentConditions;
     const { temp } = data.currentConditions;
     const { humidity } = data.currentConditions;
 

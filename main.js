@@ -20,7 +20,7 @@ window.customElements.define('daily-forecast', DailyForecast);
 //Google Map Api 
 const body = document.querySelector('body');
 const script = document.createElement('script'); 
-script.src= `https://maps.googleapis.com/maps/api/js?key=${KEY_GM}&callback=initMap&sensor=false&libraries=places`; 
+script.src= `https://maps.googleapis.com/maps/api/js?key=${KEY_GM}&callback=initMap&libraries=places`; 
 body.append(script); 
 
 
