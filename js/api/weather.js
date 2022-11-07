@@ -1,4 +1,5 @@
 import { setDailyForecastImg } from "../suppComponents/dailyForecastImg";
+// import { calendarCal } from './js/suppComponents/calendarCal.js';
 
 const KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 const KEY_VC = import.meta.env.VITE_VISUALCROSSING_KEY;
@@ -6,11 +7,19 @@ const KEY_GM = import.meta.env.VITE_GOOGLEMAP_KEY;
 
 //WeatherAPI Function connects input to fetch
 
-export async function weatherApi(destInputVal, totTravelVal) {
+export async function weatherApi(destInputVal, totTravelVal, calendar) {
 
   // Visual Crossing API - 15 Day Forecast:
   // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&key=${KEY_VC}&contentType=json`;
-  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&forecast?iconSet=icons1&contentType=json&forecastDays=${totTravelVal}&key=${KEY_VC}`;
+
+  //Recently used URL: 
+  // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&forecast?iconSet=icons1&contentType=json&forecastDays=${totTravelVal}&key=${KEY_VC}`;
+
+  //New testing URL 11/6/ @3:41PM: 
+  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}/2022-11-13/2022-11-17?unitGroup=us&key=${KEY_VC}&contentType=json`;
+
+
+  
   // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?iconSet=icons1&aggregateHours=24&combinationMethod=aggregate&shortColumnNames=true&contentType=json&unitGroup=metric&locationMode=single&locations=49.1791,-122.3161&forecastDays=7&key=`; 
 
 console.log(URL)
@@ -40,13 +49,17 @@ console.log(URL)
     const { icon } = data.currentConditions;
     const { temp } = data.currentConditions;
     const { humidity } = data.currentConditions;
+    const {datetimeEpoch} = data.currentConditions;
 
     console.log(address, icon, description, temp, humidity);
 
     //Connecting Custom element with Weather API data
+    // const custEl = document.querySelector('weather-api');
     const custEl = document.querySelector('weather-api');
+    const form = document.getElementById('form');
+    form.after(custEl);
 
-    custEl.setAttribute('location', address);
+    custEl.setAttribute('location', datetimeEpoch);
     custEl.setAttribute('temp', `${temp}°`);
     custEl.setAttribute(
       'img',
@@ -60,6 +73,9 @@ console.log(URL)
   };
   
   showWeatherDets();
+  // calendarCal(calendarCal);
+
+  
 
   //Array Config:
 
