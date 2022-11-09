@@ -1,13 +1,16 @@
 import { setDailyForecastImg } from "../suppComponents/dailyForecastImg";
 // import { calendarCal } from './js/suppComponents/calendarCal.js';
 
+
+
+
 const KEY = import.meta.env.VITE_OPENWEATHER_KEY;
 const KEY_VC = import.meta.env.VITE_VISUALCROSSING_KEY;
 const KEY_GM = import.meta.env.VITE_GOOGLEMAP_KEY;
 
 //WeatherAPI Function connects input to fetch
 
-export async function weatherApi(destInputVal, totTravelVal, calendar) {
+export async function weatherApi(lat, long) {
 
   // Visual Crossing API - 15 Day Forecast:
   // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&key=${KEY_VC}&contentType=json`;
@@ -16,42 +19,37 @@ export async function weatherApi(destInputVal, totTravelVal, calendar) {
   // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}?unitGroup=us&forecast?iconSet=icons1&contentType=json&forecastDays=${totTravelVal}&key=${KEY_VC}`;
 
   //New testing URL 11/6/ @3:41PM: 
-  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}/2022-11-13/2022-11-17?unitGroup=us&key=${KEY_VC}&contentType=json`;
+  // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}/2022-11-13/2022-11-17?unitGroup=us&key=${KEY_VC}&contentType=json`; SAMPLE URL
 
+  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${lat},${long}/?unitGroup=us&key=${KEY_VC}&contentType=json`;
 
   
   // const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/weatherdata/forecast?iconSet=icons1&aggregateHours=24&combinationMethod=aggregate&shortColumnNames=true&contentType=json&unitGroup=metric&locationMode=single&locations=49.1791,-122.3161&forecastDays=7&key=`; 
 
 console.log(URL)
+// console.log(destInputVal)
 
   const response = await fetch(URL);
   const data = await response.json();
-
   console.log(data);
 
   //Openweather - Icon
-  const URLlongLat = `https://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&appid=${KEY}`;
+  // const URLlongLat = `https://api.openweathermap.org/data/2.5/weather?lat=${data.latitude}&lon=${data.longitude}&appid=${KEY}`;
 
-  const respLonLat = await fetch(URLlongLat);
-  const dataLonLat = await respLonLat.json();
-  console.log(dataLonLat);
-
-  //Google Map Location Lookup Api
-  // const URL_GOOGLEMAP = `https://maps.google.com/maps/api/js?key=${KEY_GM}&libraries=places`;
-
-  // const respGM = await fetch(URL_GOOGLEMAP);
-  // const dataGM = await respGM.json();
-  // console.log(dataGM);
+  // const respLonLat = await fetch(URLlongLat);
+  // const dataLonLat = await respLonLat.json();
+  // console.log(dataLonLat);
 
   const showWeatherDets = function () {
     const { address, description } = data;
     // const { icon } = dataLonLat.weather[0];
-    const { icon } = data.currentConditions;
-    const { temp } = data.currentConditions;
+    // const { icon } = data.currentConditions;
+    // const { temp } = data.currentConditions;
     const { humidity } = data.currentConditions;
     const {datetimeEpoch} = data.currentConditions;
 
-    console.log(address, icon, description, temp, humidity);
+    // console.log(address, icon, description, temp, humidity);
+    console.log(address, description, humidity);
 
     //Connecting Custom element with Weather API data
     // const custEl = document.querySelector('weather-api');
@@ -59,12 +57,12 @@ console.log(URL)
     const form = document.getElementById('form');
     form.after(custEl);
 
-    custEl.setAttribute('location', datetimeEpoch);
+    custEl.setAttribute('location', address);
     custEl.setAttribute('temp', `${temp}°`);
-    custEl.setAttribute(
-      'img',
-      `http://openweathermap.org/img/wn/${icon}@2x.png`
-    );
+    // custEl.setAttribute(
+    //   'img',
+    //   `http://openweathermap.org/img/wn/${icon}@2x.png`
+    // );
     custEl.setAttribute('description', description);
     custEl.setAttribute('humidity', humidity);
     
@@ -79,46 +77,46 @@ console.log(URL)
 
   //Array Config:
 
-  const getDataDaysLengthTotal = data.days.length;
-  const getTotalTravelValueInput = Number(totTravelVal);
-  const getLenghtMinusInput = getDataDaysLengthTotal - getTotalTravelValueInput;
+  // const getDataDaysLengthTotal = data.days.length;
+  // const getTotalTravelValueInput = Number(totTravelVal);
+  // const getLenghtMinusInput = getDataDaysLengthTotal - getTotalTravelValueInput;
 
-  for (let i = 0; i < data.days.length - getLenghtMinusInput; i++) {
-    const temp = data.days[i].temp;
-    const icon = data.days[i].conditions;
-    const date = data.days[i].datetime;
+  // for (let i = 0; i < data.days.length - getLenghtMinusInput; i++) {
+  //   const temp = data.days[i].temp;
+  //   const icon = data.days[i].conditions;
+  //   const date = data.days[i].datetime;
 
-    // const b = document.createElement('div');
-    const a = document.getElementById('app');
+  //   // const b = document.createElement('div');
+  //   const a = document.getElementById('app');
 
-    const newDate = new Date(date);
+  //   const newDate = new Date(date);
 
-    // 👇️ Saturday
-    console.log(
-      newDate.toLocaleDateString('en-US', {
-        weekday: 'short',
-      })
-    )
-      const dailyForecastCont = document.createElement('div');
-      const custEl = document.createElement('daily-forecast');
+  //   // 👇️ Saturday
+  //   console.log(
+  //     newDate.toLocaleDateString('en-US', {
+  //       weekday: 'short',
+  //     })
+  //   )
+  //     const dailyForecastCont = document.createElement('div');
+  //     const custEl = document.createElement('daily-forecast');
 
-      // dailyForecastCont.append(custEl);
-      a.after(custEl);
-      custEl.setAttribute('temp', `${temp}°`);
-      custEl.setAttribute('condition', icon );
-      custEl.setAttribute('img', setDailyForecastImg(dataLonLat.weather[0].description));
-      // custEl.setAttribute(
-      //   'img',
-      //   `http://openweathermap.org/img/wn/${icon}@2x.png`
-      // );
-      // custEl.setAttribute('description', description);
-      custEl.setAttribute('date', date);
-      console.log(dataLonLat.weather[0].description)
+  //     // dailyForecastCont.append(custEl);
+  //     a.after(custEl);
+  //     custEl.setAttribute('temp', `${temp}°`);
+  //     custEl.setAttribute('condition', icon );
+  //     custEl.setAttribute('img', setDailyForecastImg(dataLonLat.weather[0].description));
+  //     // custEl.setAttribute(
+  //     //   'img',
+  //     //   `http://openweathermap.org/img/wn/${icon}@2x.png`
+  //     // );
+  //     // custEl.setAttribute('description', description);
+  //     custEl.setAttribute('date', date);
+  //     console.log(dataLonLat.weather[0].description)
 
-  }
+  // }
 
-  console.log(data);
-  console.log(dataLonLat);
+  // console.log(data);
+  // console.log(dataLonLat);
   // console.log(dataLonLat.daily.dt);
 
   /************************************** */

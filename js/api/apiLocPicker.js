@@ -1,15 +1,38 @@
-export const initMap = function() {
-    $('#map').locationpicker({
-       location: {latitude: 46.15242437752303, longitude: 2.7470703125},   
-       radius: 0,
-       inputBinding: {
-       //   latitudeInput: $('#lat'),
-       //   longitudeInput: $('#lng'),
-          locationNameInput: $('#location')
-       },
-       enableAutocomplete: true,
-    //    onchanged: function(currentLocation, radius, isMarkerDropped) {
-    //       alert("Location changed. New location (" + currentLocation.latitude + ", " + currentLocation.longitude + ")");
-    //     }
-    }); 
- };
+const weather = require('./weather.js');
+
+// Api Location:
+
+let autocomplete; 
+
+function initAutocomplete(){
+  autocomplete = new google.maps.places.Autocomplete(
+    document.getElementById('autocomplete'),
+    {
+      types:[], 
+      componentRestrictions: {'country': ['US']},
+      fields: ['geometry', 'name'],
+      
+    });
+
+    autocomplete.addListener('place_changed', onPlaceChanged);
+}
+
+
+function onPlaceChanged(){
+  var place = autocomplete.getPlace(); 
+ 
+var lat = place.geometry.location.lat(),
+    lng = place.geometry.location.lng();
+
+console.log(lat);
+console.log(lng);
+ 
+weather.weatherApi(lat, lng);
+
+  if(!place.geometry){
+    document.getElementById('autocomplete').placeholder = 'Enter a place'; 
+  } else {
+    document.getElementById('details').innerHTML = place.name;
+  }
+
+}
