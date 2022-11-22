@@ -26,7 +26,7 @@ template.innerHTML = `
 }
 
  .weather--info{
-  font-size: 1.2em;
+  font-size: 1.1em;
   line-height: 1.5;
   color: White;
 }
@@ -38,7 +38,7 @@ template.innerHTML = `
 
 
 .card-text{
-  font-size: 1.2em;
+  font-size: 1.3em;
   line-height: 1.5;
   color: White;
 }
@@ -46,6 +46,13 @@ template.innerHTML = `
 #img{
 margin-left: auto;
 margin-right: auto;
+height: 100px;
+width:100px;
+}
+
+#img-holder{
+  display:flex;
+  
 }
 
 
@@ -56,6 +63,7 @@ margin-right: auto;
     <div class="col-md-8">
     <div class="card-body">
       <h5 class="card-title">Weather in <span id="location"></span> </h5>
+      <p class="card-text">Date: <span class="weather--info" id="date"></span></p>
       <p class="card-text">Current Temperature: <span class="weather--info" id="temp"></span></p>
       <p class="card-text"><span class="weather--info" id="img-holder"><img id="img"> </span></p>
       <p class="card-text">Feels Like: <span class="weather--info" id="desc"> </span></p>
@@ -74,7 +82,7 @@ export class WeatherApi extends HTMLElement {
   }
 
   static get observedAttributes() {
-    return ['location', 'temp', 'description', 'humidity', 'img'];
+    return ['location', 'date', 'temp', 'description', 'humidity', 'img'];
   }
 
   attributeChangedCallback(prop, oldVal, newVal) {
@@ -85,6 +93,13 @@ export class WeatherApi extends HTMLElement {
         this.location.textContent = newVal;
       }
     }
+
+        if (prop === 'date') {
+      if (this.date) {
+        this.date.textContent = newVal;
+      }
+    }
+
     if (prop === 'temp') {
       if (this.temp) {
         this.temp.textContent = newVal;
@@ -113,6 +128,7 @@ export class WeatherApi extends HTMLElement {
   connectedCallback() {
     //IMP: The ShadowRoot is being used here which means your connecting to the elements in your TEMPLATE
     this.location = this.shadowRoot.querySelector('#location');
+    this.date = this.shadowRoot.querySelector('#date');
     this.temp = this.shadowRoot.querySelector('#temp');
     this.description = this.shadowRoot.querySelector('#desc');
     this.humidity = this.shadowRoot.querySelector('#hum');
