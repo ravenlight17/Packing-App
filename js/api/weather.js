@@ -1,17 +1,14 @@
-import { weatherDate } from "../suppComponents/calendarCal";
-import { showWeatherImg } from "../suppComponents/dailyForecastImg";
-
+import { weatherDate } from '../suppComponents/calendarCal';
+import { showWeatherImg } from '../suppComponents/dailyForecastImg';
 
 const KEY_VC = import.meta.env.VITE_VISUALCROSSING_KEY;
 
-
 //WeatherAPI Function connects input to fetch
-      export async function weatherApi(destInputVal,startDate, endDate) {
-  
+export async function weatherApi(destInputVal, startDate, endDate) {
   // Visual Crossing API - 15 Day Forecast:
-      const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}/${startDate}/${endDate}?iconSet=icons2&unitGroup=us&key=${KEY_VC}&contentType=json`;  
+  const URL = `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${destInputVal}/${startDate}/${endDate}?iconSet=icons2&unitGroup=us&key=${KEY_VC}&contentType=json`;
 
-  console.log(URL)
+  console.log(URL);
 
   const response = await fetch(URL);
   const data = await response.json();
@@ -22,34 +19,35 @@ const KEY_VC = import.meta.env.VITE_VISUALCROSSING_KEY;
 
     for (let i = 0; i < data.days.length; i++) {
       console.log(data.days.length);
-      const {datetime, temp, icon, description, humidity} = data.days[i];
-      console.log(icon)
-      
-    console.log(address, description);
+      const { datetime, temp, icon, description, humidity } = data.days[i];
+      console.log(icon);
 
-    //Connecting Custom element with Weather API data
-    const dailyForecastCont = document.createElement('div');
-    const custEl = document.createElement('weather-api');
-    const weatherBox = dailyForecastCont.appendChild(custEl);
-    
-    const form = document.getElementById('form');
-    form.after(weatherBox);
-    const wd = weatherDate(datetime); 
-    console.log(wd)
-    custEl.setAttribute('location', address);
-    // custEl.setAttribute('date', `${datetime} ${weatherDate(datetime)}` );
-    custEl.setAttribute('date', wd );
-    custEl.setAttribute('temp', `${temp}°`);
+      console.log(address, description);
 
-   showWeatherImg(icon, custEl);
-    
-    custEl.setAttribute('description', description);
-    custEl.setAttribute('humidity', humidity);
-    
-    };
-    
+      //Connecting Custom element with Weather API data
+      const boxer = document.querySelector('#boxer');
+      const dailyForecastCont = document.createElement('div');
+      const custEl = document.createElement('weather-api');
+      // const weatherBox = dailyForecastCont.appendChild(custEl);
+      const weatherBox = boxer.appendChild(custEl);
+
+      const form = document.getElementById('form');
+      form.after(weatherBox);
+      const wd = weatherDate(datetime);
+      console.log(wd);
+      custEl.setAttribute('location', address);
+      // custEl.setAttribute('date', `${datetime} ${weatherDate(datetime)}` );
+      custEl.setAttribute('date', wd);
+      custEl.setAttribute('temp', `${temp}°`);
+
+      showWeatherImg(icon, custEl);
+
+      custEl.setAttribute('description', description);
+      custEl.setAttribute('humidity', humidity);
+    }
   };
 
   showWeatherDets();
-  
 }
+
+document.querySelector('#test').style.color = 'purple';
