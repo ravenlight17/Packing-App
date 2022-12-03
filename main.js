@@ -9,19 +9,18 @@ btn.addEventListener('click', (e) => {
   const startDate = document.getElementById('whenFrom').value;
   const endDate = document.getElementById('whenTo').value;
   const destInputVal = document.getElementById('autocomplete').value;
-   
+
   console.log(startDate);
   console.log(endDate);
   console.log(destInputVal);
- 
+
   // weatherApi(destInputVal, startDate, endDate);
   weatherApi(destInputVal, startDate, endDate);
- 
-//Enable Weather Custom Component:
-window.customElements.define('weather-api', WeatherApi);
-window.customElements.define('daily-forecast', DailyForecast);
 
+  //Jump to other html pg:
+  window.open('forecast.html', '_blank');
+
+  //Enable Weather Custom Component:
+  window.customElements.define('weather-api', WeatherApi);
+  window.customElements.define('daily-forecast', DailyForecast);
 });
-
-
-
