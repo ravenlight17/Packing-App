@@ -20,7 +20,7 @@ btn.addEventListener('click', (e) => {
   //Jump to other html pg:
   window.open('forecast.html', '_blank');
 
-  //Enable Weather Custom Component:
-  window.customElements.define('weather-api', WeatherApi);
-  window.customElements.define('daily-forecast', DailyForecast);
+  // Enable Weather Custom Component:
+  // window.customElements.define('weather-api', WeatherApi);
+  // window.customElements.define('daily-forecast', DailyForecast);
 });
